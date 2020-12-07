@@ -2,7 +2,7 @@ import './App.css';
 import Caclulator from './Calculator.js';
 
 function App() {
-  return <Caclulator></Caclulator>
+  return <Caclulator/>
 }
 
 export default App;
