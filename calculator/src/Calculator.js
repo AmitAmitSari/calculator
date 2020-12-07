@@ -18,7 +18,7 @@ function createCreateOperationButton(number, setOperation, setPrevNumber, setNum
 
 function Caclulator() {
   let [prevNumber, setPrevNumber] = useState(null);
-  let [operation, setOperation] = useState({sign: null, func: (x, y) => {} });
+  let [operation, setOperation] = useState({sign: null, func: null });
   let [number, setNumber] = useState(null);
 
   let createOperationButton = createCreateOperationButton(number, setOperation, setPrevNumber, setNumber)
@@ -33,21 +33,36 @@ function Caclulator() {
       <div> { operating ? operation.func(prevNumber, number) : null } </div>
       <div>
         { [7, 8, 9].map(num => createNumberButton(num, number, setNumber)) }
-        { createOperationButton('/', (x, y) => {return x / y}) }
+        { createOperationButton('/', (x, y) => x / y) }
       </div>
       <div>
         { [4, 5, 6].map(num => createNumberButton(num, number, setNumber)) }
-        { createOperationButton('x', (x, y) => {return x * y}) }
+        { createOperationButton('x', (x, y) => x * y) }
       </div>
       <div>
         { [1, 2, 3].map(num => createNumberButton(num, number, setNumber)) }
-        { createOperationButton('-', (x, y) => {return x - y}) }
+        { createOperationButton('-', (x, y) => x - y) }
       </div>
       <div>
         <button>-</button>
         { createNumberButton(0, number, setNumber) }
         <button>.</button>
-        { createOperationButton('+', (x, y) => {return x + y}) }
+        { createOperationButton('+', (x, y) => x + y) }
+      </div>
+      <div>
+          <button onClick={() => {
+              setNumber(null);
+              setPrevNumber(null);
+              setOperation({sign: null, func: null});
+          }}>AC</button>
+          <button onClick={() => {
+              if (!operating) {
+                  return;
+              }
+              setNumber(operation.func(prevNumber, number));
+              setPrevNumber(null);
+              setOperation({sign: null, func: null});
+          }}>=</button>
       </div>
     </div>
   );
