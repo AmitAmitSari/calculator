@@ -5,13 +5,20 @@ function createNumberButton(num, number, setNumber) {
   return <Col span={1}><Button block="true" onClick={() => setNumber(number * 10 + num)}>{num}</Button></Col>
 }
 
+const operations = {
+    ADD: {sign: '+', func: (x, y) => x + y},
+    SUBTRACT: {sign: '-', func: (x, y) => x - y},
+    MULTIPLY: {sign: 'x', func: (x, y) => x * y},
+    DIVIDE: {sign: '/', func: (x, y) => x / y}
+}
+
 function createCreateOperationButton(number, setOperation, setPrevNumber, setNumber) {
-  return (sign, callback) => {
+  return (operation) => {
     return <Col span={1}><Button block="true" onClick={() => {
-      setOperation({sign: sign, func: callback});
+      setOperation(operation);
       setPrevNumber(number);
       setNumber(null);
-    }}>{sign}</Button></Col>
+    }}>{operation.sign}</Button></Col>
   };
 }
 
@@ -29,21 +36,21 @@ function Caclulator() {
       <Row justify="center"> { prevNumber } { operation.sign } {number} { operating ? ' = ' + operation.func(prevNumber, number) : null } </Row>
       <Row justify="center">
         { [7, 8, 9].map(num => createNumberButton(num, number, setNumber)) }
-        { createOperationButton('/', (x, y) => x / y) }
+        { createOperationButton(operations.DIVIDE) }
       </Row>
       <Row justify="center">
         { [4, 5, 6].map(num => createNumberButton(num, number, setNumber)) }
-        { createOperationButton('x', (x, y) => x * y) }
+        { createOperationButton(operations.MULTIPLY) }
       </Row>
       <Row justify="center">
         { [1, 2, 3].map(num => createNumberButton(num, number, setNumber)) }
-        { createOperationButton('-', (x, y) => x - y) }
+        { createOperationButton(operations.SUBTRACT) }
       </Row>
       <Row justify="center">
         <Col span={1}><Button block="true">-</Button></Col>
         { createNumberButton(0, number, setNumber) }
         <Col span={1}><Button block="true">.</Button></Col>
-        { createOperationButton('+', (x, y) => x + y) }
+        { createOperationButton(operations.ADD) }
       </Row>
       <Row justify="center">
           <Col span={2}>
