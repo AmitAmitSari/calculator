@@ -30,6 +30,11 @@ function App() {
             </div>);
           })
       }
+      <div>
+        <Button text='-'></Button>
+        <Button text='0' onClick={() => setNumber(number * 10)}></Button>
+        <Button text='.'></Button>
+      </div>
     </div>
   );
 }
