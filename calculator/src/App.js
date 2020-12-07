@@ -1,39 +1,54 @@
 import './App.css';
 import React, { useState } from 'react'
 
-
-function Button(props) {
-  return (
-    <button onClick={props.onClick}>{props.text}</button>
-  );
+function createNumberButton(num, number, setNumber) {
+  return <button onClick={() => setNumber(number * 10 + num)}>{num}</button>
 }
 
+function createCreateOperationButton(number, setOperation, setPrevNumber, setNumber) {
+  function createOperationButton(sign, callback) {
+    return <button onClick={() => {
+      setOperation({sign: sign, func: callback});
+      setPrevNumber(number);
+      setNumber(null);
+    }}>{sign}</button>
+  }
+
+  return createOperationButton
+}
 
 function App() {
+  let [prevNumber, setPrevNumber] = useState(null);
+  let [operation, setOperation] = useState({sign: null, func: (x, y) => {} });
   let [number, setNumber] = useState(null);
+
+  let createOperationButton = createCreateOperationButton(number, setOperation, setPrevNumber, setNumber)
+
+  let operating = operation.sign !== null && number !== null
+
   return (
     <div>
+      <div> { prevNumber } </div>
+      <div> { operation.sign } { number } </div>
+      <div> {operating ? '---------------' : null} </div>
+      <div> { operating ? operation.func(prevNumber, number) : null } </div>
       <div>
-        {number}
+        { [7, 8, 9].map(num => createNumberButton(num, number, setNumber)) }
+        { createOperationButton('/', (x, y) => {return x / y}) }
       </div>
-      {
-        Array(3).fill(null).map((_, i) => -i + 2).map(i => {
-          return (
-            <div>
-            {
-              Array(3).
-              fill(null).
-              map((_, j) => i * 3 + j + 1).
-              map(num =>
-                {return <Button text={num} onClick={() => setNumber(number * 10 + num)}></Button>})
-            }
-            </div>);
-          })
-      }
       <div>
-        <Button text='-'></Button>
-        <Button text='0' onClick={() => setNumber(number * 10)}></Button>
-        <Button text='.'></Button>
+        { [4, 5, 6].map(num => createNumberButton(num, number, setNumber)) }
+        { createOperationButton('x', (x, y) => {return x * y}) }
+      </div>
+      <div>
+        { [1, 2, 3].map(num => createNumberButton(num, number, setNumber)) }
+        { createOperationButton('-', (x, y) => {return x - y}) }
+      </div>
+      <div>
+        <button>-</button>
+        { createNumberButton(0, number, setNumber) }
+        <button>.</button>
+        { createOperationButton('+', (x, y) => {return x + y}) }
       </div>
     </div>
   );
