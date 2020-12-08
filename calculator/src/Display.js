@@ -1,9 +1,11 @@
-import { Col } from 'antd'
+import { Col } from 'antd';
+
+import PropTypes from 'prop-types';
 
 import { CenterRow } from './BasicComponents';
 
 export function Display(props) {
-    let spanMul = 4
+    const spanMul = props.scaling
     return (
         <>
             <CenterRow>
@@ -18,4 +20,10 @@ export function Display(props) {
             </CenterRow>
         </>
     );
+}
+
+Display.propTypes = {
+    equation: PropTypes.string,
+    result: PropTypes.number,
+    scaling: PropTypes.number
 }

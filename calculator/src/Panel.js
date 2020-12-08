@@ -1,4 +1,5 @@
 import { Col, Button } from 'antd'
+import PropTypes from 'prop-types';
 
 import { NumberButton, createOperationButton, CenterRow } from './BasicComponents';
 
@@ -14,7 +15,7 @@ export const operations = {
 
 
 export function Panel(props) {
-    let spanMul = 4
+    const spanMul = props.scaling
     return (
         <>
             <CenterRow>
@@ -46,3 +47,10 @@ export function Panel(props) {
       </>
     );
 }
+
+Panel.propTypes = {
+    numberCallback: PropTypes.func.isRequired,
+    operationCallback: PropTypes.func.isRequired,
+    scaling: PropTypes.number
+}
+
