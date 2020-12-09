@@ -1,7 +1,8 @@
-import { Col, Button } from 'antd'
+import { Col } from 'antd'
 import PropTypes from 'prop-types';
 
-import { NumberButton, createOperationButton, CenterRow } from './BasicComponents';
+import { CallbackButton, OrangeButton } from './ButtonComponents';
+import { CenterRow } from './GridComponents';
 
 export const operations = {
     ADD: {sign: '+', func: (x, y) => x + y},
@@ -14,35 +15,50 @@ export const operations = {
 }
 
 
-export function Panel(props) {
-    const spanMul = props.scaling
+export function Panel({ scale, numberCallback, operationCallback}) {
+
+    const createNumberButtons = (numArray) => numArray.map(num =>
+        <Col span={scale}>
+            <CallbackButton
+                text={num}
+                callback={() => numberCallback(num)}/>
+        </Col>);
+    const createOperationButton = (op, mul=1) =>
+        <Col span={scale * mul}>
+            <OrangeButton
+                text={op.sign}
+                callback={() => operationCallback(op)} />
+        </Col>;
+    const createNoopButton = (sign) =>
+        <Col span={scale}>
+            <CallbackButton
+                text={sign}
+                callback={() => null} />
+        </Col>
+
     return (
         <>
             <CenterRow>
-                { [7, 8, 9].map(num => <Col span={spanMul}><NumberButton num={num} numberCallback={() => props.numberCallback(num)}/></Col>) }
-                <Col span={spanMul}>{ createOperationButton(operations.DIVIDE, props.operationCallback) } </Col>
+                { createNumberButtons([7, 8, 9]) }
+                { createOperationButton(operations.DIVIDE) }
             </CenterRow>
             <CenterRow>
-                { [4, 5, 6].map(num => <Col span={spanMul}><NumberButton num={num} numberCallback={() => props.numberCallback(num)}/></Col>) }
-                <Col span={spanMul}>{ createOperationButton(operations.MULTIPLY, props.operationCallback) } </Col>
+                { createNumberButtons([4, 5, 6]) }
+                { createOperationButton(operations.MULTIPLY) }
             </CenterRow>
             <CenterRow>
-                { [1, 2, 3].map(num => <Col span={spanMul}><NumberButton num={num} numberCallback={() => props.numberCallback(num)}/></Col>) }
-                <Col span={spanMul}>{ createOperationButton(operations.SUBTRACT, props.operationCallback) } </Col>
+                { createNumberButtons([1, 2, 3]) }
+                { createOperationButton(operations.SUBTRACT) }
             </CenterRow>
             <CenterRow>
-                <Col span={spanMul}><Button size="large" block="true">-</Button></Col>
-                <Col span={spanMul}><NumberButton num={0} numberCallback={() => props.numberCallback(0)}/></Col>
-                <Col span={spanMul}><Button size="large" block="true">.</Button></Col>
-                <Col span={spanMul}>{ createOperationButton(operations.ADD, props.operationCallback) } </Col>
+                { createNoopButton('-') }
+                { createNumberButtons([0]) }
+                { createNoopButton('.') }
+                { createOperationButton(operations.ADD) }
             </CenterRow>
             <CenterRow>
-                <Col span={2 * spanMul}>
-                    { createOperationButton(operations.AC, props.operationCallback) }
-                </Col>
-                <Col span={2 * spanMul}>
-                    { createOperationButton(operations.EQUALS, props.operationCallback) }
-                </Col>
+                { createOperationButton(operations.AC, 2) }
+                { createOperationButton(operations.EQUALS, 2) }
             </CenterRow>
       </>
     );
@@ -51,6 +67,6 @@ export function Panel(props) {
 Panel.propTypes = {
     numberCallback: PropTypes.func.isRequired,
     operationCallback: PropTypes.func.isRequired,
-    scaling: PropTypes.number
+    scale: PropTypes.number.isRequired
 }
 
