@@ -1,11 +1,8 @@
 import './App.css';
-import React, { useState } from 'react'
+import Caclulator from './Calculator.js';
 
 function App() {
-  return (
-    <div>
-    </div>
-  );
+  return <Caclulator scale={4}/>
 }
 
 export default App;
