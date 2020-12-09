@@ -35,21 +35,18 @@ export function Panel({ scale, numberCallback, operationCallback}) {
                 text={sign}
                 callback={() => null} />
         </Col>
+    
+    const createPanelRow = (numbers, operation) => 
+        <CenterRow>
+            { createNumberButtons(numbers) }
+            { createOperationButton(operation) }
+        </CenterRow>
 
     return (
         <>
-            <CenterRow>
-                { createNumberButtons([7, 8, 9]) }
-                { createOperationButton(operations.DIVIDE) }
-            </CenterRow>
-            <CenterRow>
-                { createNumberButtons([4, 5, 6]) }
-                { createOperationButton(operations.MULTIPLY) }
-            </CenterRow>
-            <CenterRow>
-                { createNumberButtons([1, 2, 3]) }
-                { createOperationButton(operations.SUBTRACT) }
-            </CenterRow>
+            { createPanelRow([7, 8, 9], operations.DIVIDE) }
+            { createPanelRow([4, 5, 6], operations.MULTIPLY) }
+            { createPanelRow([1, 2, 3], operations.SUBTRACT) }
             <CenterRow>
                 { createNoopButton('-') }
                 { createNumberButtons([0]) }

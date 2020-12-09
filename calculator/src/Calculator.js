@@ -63,14 +63,14 @@ function Caclulator({ scale }) {
     const result = operating ? operation.func(prevNumber, number) : '\xa0';
 
     return (
-        <div>
-        <Display scale={scale} equation={ equation } result={ result } />
-        <Panel
-            scale={scale}
-            numberCallback={(num) => setNumber(number * 10 + num)}
-            operationCallback={(op) => operationCallback(op)}
-            />
-        </div>
+        <>
+            <Display scale={scale} equation={ equation } result={ result } />
+            <Panel
+                scale={scale}
+                numberCallback={num => setNumber(number * 10 + num)}
+                operationCallback={op => operationCallback(op)}
+                />
+        </>
     );
 }
 
