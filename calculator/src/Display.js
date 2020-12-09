@@ -23,6 +23,6 @@ export function Display({ scale, equation, result}) {
 
 Display.propTypes = {
     equation: PropTypes.string,
-    result: PropTypes.number,
+    result: PropTypes.string,
     scale: PropTypes.number.isRequired
 }

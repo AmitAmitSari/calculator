@@ -4,22 +4,10 @@ import PropTypes from 'prop-types'
 import { Display } from './Display';
 import { Panel, operations } from './Panel'
 
-function createEquation(prevNumber, operation, number) {
-    let operating = operation.sign !== null && number !== null
-
-    let equation = '';
-    if (prevNumber) { equation += prevNumber + ' '; }
-    if (operation.sign) {equation += operation.sign + ' '; }
-    if (number) {equation += number; }
-    if (operating) {equation += ' = ';}
-    if (!equation) {equation = '\xa0'; } // Non breaking space.
-    return equation;
-}
-
 function Caclulator({ scale }) {
-    let [prevNumber, setPrevNumber] = useState(null);
-    let [operation, setOperation] = useState(operations.NOOP);
-    let [number, setNumber] = useState(null);
+    const [prevNumber, setPrevNumber] = useState(null);
+    const [operation, setOperation] = useState(operations.NOOP);
+    const [number, setNumber] = useState(null);
     const operating = operation.sign !== null && number !== null
 
     const createEquation = () => {

@@ -7,7 +7,7 @@ export function CallbackButton({ color, callback, text}) {
         <Button
             size="large"
             block="true"
-            style={color ? {"background-color": color} : {}}
+            style={color ? {"backgroundColor": color} : {}}
             onClick={callback}>
                 { text }
         </Button>
@@ -16,7 +16,7 @@ export function CallbackButton({ color, callback, text}) {
 
 CallbackButton.propTypes = {
     callback: PropTypes.func.isRequired,
-    text: PropTypes.number.isRequired,
+    text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     color: PropTypes.string
 }
 
@@ -28,5 +28,5 @@ export function OrangeButton({ callback, text}) {
 
 OrangeButton.propTypes = {
     callback: PropTypes.func.isRequired,
-    text: PropTypes.number.isRequired
+    text: PropTypes.string.isRequired
 }
